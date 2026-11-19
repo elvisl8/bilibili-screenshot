@@ -17,8 +17,8 @@
   --warn-border: #f0d98c;
   --ok: #1e8e3e;
   --err: #c0392b;
-  --accent: #cc0000;
-  --accent-hover: #ee0000;
+  --accent: #fb6699;
+  --accent-hover: #fc85ad;
   --disabled-bg: #cccccc;
 }
 
@@ -39,8 +39,8 @@
     --warn-border: #6b5a22;
     --ok: #6dd58c;
     --err: #f28b82;
-    --accent: #d93025;
-    --accent-hover: #ea4335;
+    --accent: #fb6699;
+    --accent-hover: #fc85ad;
     --disabled-bg: #444444;
   }
 }

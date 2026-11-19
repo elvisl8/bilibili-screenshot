@@ -1,0 +1,45 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - "v*"
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      # check.mjs refuses to pass when the tag and the manifest version differ
+      - name: Project checks
+        run: node scripts/check.mjs
+      - name: JavaScript syntax
+        run: |
+          for f in extension/*.js; do node --check "$f"; done
+      - name: Extract release notes from CHANGELOG.md
+        run: |
+          VER="${GITHUB_REF_NAME#v}"
+          awk -v ver="$VER" '
+            $0 ~ "^## \\[" ver "\\]" { capture = 1; next }
+            capture && /^## \[/ { exit }
+            capture { print }
+          ' CHANGELOG.md | sed -e '1{/^$/d}' -e '${/^$/d}' > release-notes.md
+          test -s release-notes.md
+      - name: Build Bilibili-Screenshot-${{ github.ref_name }}.zip
+        run: |
+          cd extension
+          zip -r "../Bilibili-Screenshot-${GITHUB_REF_NAME}.zip" . -x "*.DS_Store"
+      - name: Publish GitHub release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh release create "${GITHUB_REF_NAME}" \
+            "Bilibili-Screenshot-${GITHUB_REF_NAME}.zip" \
+            --title "${GITHUB_REF_NAME}" \
+            --notes-file release-notes.md

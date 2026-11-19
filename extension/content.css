@@ -1,0 +1,176 @@
+/* Bilibili Screenshot - styles injected into Bilibili pages */
+
+/* Capture button inside the player.
+   Kept consistent with Bilibili's own icon buttons (36x36 icon grid): content.js
+   copies the neighbouring settings button's box and icon size at runtime and
+   aligns the two icon centres vertically. The appearance properties below all
+   use !important, so page styles cannot paint a background or reshape it. */
+.bili-capture-btn {
+  box-sizing: border-box !important;
+  display: inline-block !important;
+  flex: none !important;
+  float: none !important;
+  position: relative !important;
+  vertical-align: top !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  background: none !important;
+  box-shadow: none !important;
+  filter: none !important;
+}
+.bili-capture-btn::before,
+.bili-capture-btn::after {
+  content: none !important;
+  display: none !important;
+}
+.bili-capture-btn:hover,
+.bili-capture-btn:active,
+.bili-capture-btn:focus {
+  background: none !important;
+  box-shadow: none !important;
+}
+.bili-capture-btn:focus:not(:focus-visible) {
+  outline: none !important;
+}
+.bili-capture-btn svg {
+  position: absolute !important;
+  left: 50% !important;
+  top: 50% !important;
+  margin: 0 !important;
+  transform: translate(-50%, -50%) !important;
+  display: block !important;
+  /* Fallback size; content.js sets the exact size inline from the neighbour icon */
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.5));
+}
+.bili-capture-btn:hover svg {
+  filter: brightness(1.25) drop-shadow(0 1px 2px rgba(0, 0, 0, 0.5));
+}
+
+/* Hide the toast/preview during a "What you see" capture so they don't end up in the image */
+.bili-capturing .bili-toast,
+.bili-capturing .bili-preview-wrap {
+  visibility: hidden !important;
+  transition: none !important;
+}
+
+/* Toast */
+.bili-toast {
+  position: fixed;
+  left: 50%;
+  bottom: 84px;
+  transform: translateX(-50%) translateY(16px);
+  z-index: 2147483647;
+  background: rgba(20, 20, 20, 0.92);
+  color: #fff;
+  font-size: 13px;
+  line-height: 1.5;
+  padding: 9px 16px;
+  border-radius: 8px;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.25s, transform 0.25s;
+  max-width: 80vw;
+  font-family: Roboto, Arial, sans-serif;
+}
+.bili-toast-show {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+}
+.bili-toast-error {
+  background: rgba(160, 30, 30, 0.94);
+}
+
+/* Preview overlay */
+.bili-preview-wrap {
+  position: fixed;
+  inset: 0;
+  z-index: 2147483646;
+  background: rgba(0, 0, 0, 0.62);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: Roboto, Arial, sans-serif;
+}
+.bili-preview-card {
+  background: #1f1f1f;
+  color: #eee;
+  border-radius: 12px;
+  padding: 14px;
+  max-width: min(880px, 92vw);
+  max-height: 90vh;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  box-shadow: 0 12px 48px rgba(0, 0, 0, 0.5);
+}
+.bili-preview-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  font-size: 13px;
+  color: #ccc;
+}
+.bili-preview-img {
+  max-width: 100%;
+  max-height: 68vh;
+  object-fit: contain;
+  border-radius: 6px;
+  background: #000;
+}
+.bili-preview-actions {
+  display: flex;
+  gap: 10px;
+  justify-content: flex-end;
+}
+.bili-dialog-btn {
+  background: #303030;
+  color: #fff;
+  border: 1px solid #4a4a4a;
+  border-radius: 8px;
+  padding: 8px 14px;
+  font-size: 13px;
+  cursor: pointer;
+}
+.bili-dialog-btn:hover {
+  background: #3f3f3f;
+}
+.bili-preview-actions .bili-save {
+  background: #c00;
+  border-color: #c00;
+}
+.bili-preview-actions .bili-save:hover {
+  background: #e00;
+}
+
+/* Bilibili dedicated build: button inside .bpx-player-control-bottom-right.
+   Bilibili control items are divs with their own sizing; content.js sets the
+   button box from a neighbouring item at runtime. These rules only centre
+   the icon and keep the site CSS from repainting the button. */
+.bili-player-btn {
+  box-sizing: border-box !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  align-self: center !important;
+  flex: none !important;
+  position: relative !important;
+  vertical-align: middle !important;
+  margin-top: 0 !important;
+  margin-bottom: 0 !important;
+  line-height: 1 !important;
+  cursor: pointer !important;
+}
+.bili-player-btn svg {
+  position: absolute !important;
+  left: 50% !important;
+  top: 50% !important;
+  margin: 0 !important;
+  display: block !important;
+  transform: translate(-50%, -50%) !important;
+}
